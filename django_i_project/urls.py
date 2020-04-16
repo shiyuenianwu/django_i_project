@@ -16,6 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from interface_app.views.service.service_detail import ServiceDetailView
+from interface_app.views.service.service_list import ServiceListView
+from interface_app.views.task.task_detail import TaskDetailView
+from interface_app.views.task.task_list import TaskListView
+from interface_app.views.user import user_views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/user/login/', user_views.loginUser),
+    path('api/user/register/', user_views.register),
+    path('api/user/logout/', user_views.logout),
+    path('api/user/info/', user_views.get_user_info),
+
+    path('api/services/', ServiceListView.as_view()),
+    path('api/service/int:service_id/', ServiceDetailView.as_view()),
+
+    path('api/tasks/', TaskListView.as_view()),
+    path('api/task/int:service_id/', TaskDetailView.as_view()),
 ]

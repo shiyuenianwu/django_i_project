@@ -1,28 +1,30 @@
-'''
-@Author: your name
-@Date: 2020-03-20 23:00:23
-@LastEditTime: 2020-03-20 23:30:56
-@LastEditors: Please set LastEditors
-@Description: In User Settings Edit
-@FilePath: \test_dev\django_i_project\interface_app\libs\reponse.py
-'''
 from django.http import JsonResponse
 
 
 class ErrorCode:
     common = 10000
+    auth = 10001
+    service = 10002
+    task = 10003
 
 
 def common_response(success, data, error_code, error_message):
-
-    response = {
-        "success": success,
-        "data": data,
-        "error": {
-            "code": error_code,
-            "message": error_message
-        },
-    }
+    if error_code == "" and error_message == "":
+        print("1")
+        response = {
+            "success": success,
+            "data": data,
+        }
+    else:
+        print("2")
+        response = {
+            "success": success,
+            "data": data,
+            "error": {
+                "code": error_code,
+                "message": error_message
+            },
+        }
 
     return JsonResponse(response, safe=False)
 
